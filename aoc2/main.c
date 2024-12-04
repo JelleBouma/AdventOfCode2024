@@ -1,14 +1,19 @@
-#include <pthread_time.h>
+#include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
 
 #define level_base 10
 #define sector_max_byte_len 64
 
+int are_levels_remaining(char* str)
+{
+    return str && *str && *str != '\r' && *str != '\n';
+}
+
 int is_safe(char* level) {
     long prev_level_val = strtol(level, &level, level_base);
     int prev_difference = 0;
-    while (level && *level && *level != '\n') {
+    while (are_levels_remaining(level)) {
         long level_val = strtol(level, &level, level_base);
         long difference = level_val - prev_level_val;
         long abs_difference = labs(difference);
