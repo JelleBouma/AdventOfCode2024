@@ -5,9 +5,9 @@
 #define location_id_base 10
 
 int cmpll(const void* a, const void* b) {
-    if (*((long*)a) - *((long*)b) < 0)
+    if (*(long*)a - *(long*)b < 0)
         return -1;
-    if (*((long*)a) - *((long*)b) > 0)
+    if (*(long*)a - *(long*)b > 0)
         return 1;
     return 0;
 }
@@ -22,7 +22,7 @@ int count_ids(char *str) {
     return count;
 }
 
-long fget_pairwise_sum_of_distances(FILE *file) {
+void calc_answers(FILE *file) {
     // read entire file into buffer
     fseek(file, 0, SEEK_END);
     long file_size = ftell(file);
@@ -42,22 +42,56 @@ long fget_pairwise_sum_of_distances(FILE *file) {
         column_1[pp] = strtol(next_location_id, &next_location_id, location_id_base);
     }
 
+    struct timespec cpu_start, cpu_end;
+    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &cpu_start);
+
     // sort arrays
     qsort(column_0, pair_count, sizeof(long), cmpll);
     qsort(column_1, pair_count, sizeof(long), cmpll);
 
-    // calculate
-    long pairwise_sum_of_distances = 0;
+    // calculate total distance
+    long total_distance = 0;
     for (int pp = 0; pp < pair_count; pp++)
-        pairwise_sum_of_distances += labs(column_0[pp] - column_1[pp]);
-    return pairwise_sum_of_distances;
+        total_distance += labs(column_0[pp] - column_1[pp]);
+    printf("Total distance: %ld\n", total_distance);
+
+    // calculate similarity score
+    long similarity_score = 0;
+    int indexer_0 = 0, indexer_1 = 0;
+    while (indexer_0 < pair_count && indexer_1 < pair_count)
+    {
+        const long element_0 = column_0[indexer_0];
+        const long element_1 = column_1[indexer_1];
+        if (element_0 == element_1)
+        {
+            indexer_0++;
+            indexer_1++;
+            int count_0 = 1;
+            int count_1 = 1;
+            while (element_0 == column_0[indexer_0] && indexer_0 < pair_count)
+            {
+                count_0++;
+                indexer_0++;
+            }
+            while (element_1 == column_1[indexer_1] && indexer_1 < pair_count)
+            {
+                count_1++;
+                indexer_1++;
+            }
+            similarity_score += count_0 * count_1 * element_0;
+        }
+        else if (element_0 < element_1)
+            indexer_0++;
+        else if (element_0 > element_1)
+            indexer_1++;
+    }
+    printf("Similarity score: %ld\n", similarity_score);
+    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &cpu_end);
+    printf("Execution time (CPU) in nanoseconds: %ld\n", cpu_end.tv_nsec - cpu_start.tv_nsec);
 }
 
 // supports location ids up to at least 2^31-1
 int main(int argc, char **argv) {
-    struct timespec cpu_start, cpu_end, wall_start, wall_end;
-    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &cpu_start);
-    clock_gettime(CLOCK_MONOTONIC, &wall_start);
     if (argc != 2) {
         perror("Invalid number of arguments, usage: aoc1 [file]");
         return EXIT_FAILURE;
@@ -67,11 +101,6 @@ int main(int argc, char **argv) {
         perror("Could not open file");
         return EXIT_FAILURE;
     }
-    long pairwise_sum_of_distances = fget_pairwise_sum_of_distances(file);
-    printf("Smallest sum of distances: %ld\n", pairwise_sum_of_distances);
-    clock_gettime(CLOCK_PROCESS_CPUTIME_ID, &cpu_end);
-    clock_gettime(CLOCK_MONOTONIC, &wall_end);
-    printf("Execution time (CPU) in nanoseconds: %ld\n", cpu_end.tv_nsec - cpu_start.tv_nsec);
-    printf("Execution time (Wall) in nanoseconds: %ld\n", wall_end.tv_nsec - wall_start.tv_nsec);
+    calc_answers(file);
     return EXIT_SUCCESS;
 }
