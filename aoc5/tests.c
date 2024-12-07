@@ -10,17 +10,16 @@
 "1,2,3\n"
 "1,5,3\n";
 
-void order_page_numbers_test() {
-    struct ordered_page pages[max_pages] = {0};
-    order_page_numbers(input, pages);
-    assert(pages[0].page == 1);
-    assert(pages[1].page == 2);
-    assert(pages[1].related_to_previous);
-    assert(pages[2].page == 5);
-    assert(!pages[2].related_to_previous);
-    assert(pages[3].page == 3);
-    assert(pages[3].related_to_previous);
-    assert(pages[4].page == 0);
+void build_rule_table_test() {
+    GHashTable* rule_table = build_rule_table(&input);
+    g_assert(g_hash_table_contains(rule_table, GINT_TO_POINTER(2)));
+    g_assert(g_hash_table_contains(rule_table, GINT_TO_POINTER(1)));
+    g_assert(g_hash_table_contains(rule_table, GINT_TO_POINTER(5)));
+    g_assert_cmpint(g_hash_table_size(rule_table), ==, 3);
+    GHashTable* rules_for_page_1 = g_hash_table_lookup(rule_table, GINT_TO_POINTER(1));
+    g_assert_cmpint(g_hash_table_size(rules_for_page_1), ==, 2);
+    g_assert(g_hash_table_contains(rules_for_page_1, GINT_TO_POINTER(2)));
+    g_assert(g_hash_table_contains(rules_for_page_1, GINT_TO_POINTER(5)));
 }
 
 char* full_input = "47|53\n"
@@ -53,14 +52,16 @@ char* full_input = "47|53\n"
 "97,13,75,29,47\n";
 
 void get_middle_page_total_test() {
-    struct ordered_page pages[max_pages] = {0};
-    char* updates = order_page_numbers(full_input, pages);
-    long total = get_middle_page_total(updates, pages);
-    assert(total == 143);
+    char** input_ptr = &input;
+    GHashTable* rule_table = build_rule_table(input_ptr);
+    long total = get_middle_page_total(*input_ptr, rule_table);
+    g_assert_cmpint(total, ==, 143);
 }
 
 
 int main(int argc, char **argv) {
-    order_page_numbers_test();
-    get_middle_page_total_test();
+    g_test_init (&argc, &argv, NULL);
+    g_test_add_func("/aoc5/build_rule_table", build_rule_table_test);
+    g_test_add_func("/aoc5/get_middle_page_total", get_middle_page_total_test);
+    return g_test_run();
 }
