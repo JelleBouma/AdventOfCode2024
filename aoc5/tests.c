@@ -51,17 +51,18 @@ char* full_input = "47|53\n"
 "61,13,29\n"
 "97,13,75,29,47\n";
 
-void get_middle_page_total_test() {
+void get_middle_page_sums_test() {
     char** input_ptr = &input;
     GHashTable* rule_table = build_rule_table(input_ptr);
-    long total = get_middle_page_total(*input_ptr, rule_table);
-    g_assert_cmpint(total, ==, 143);
+    MiddlePageSums sums = get_middle_page_sums(*input_ptr, rule_table);
+    g_assert_cmpint(sums.correct_ordering_middle_page_sum, ==, 143);
+    g_assert_cmpint(sums.reordered_middle_page_sum, ==, 123);
 }
 
 
 int main(int argc, char **argv) {
     g_test_init (&argc, &argv, NULL);
-    g_test_add_func("/aoc5/build_rule_table", build_rule_table_test);
-    g_test_add_func("/aoc5/get_middle_page_total", get_middle_page_total_test);
+    g_test_add_func("/build_rule_table/build_rule_table", build_rule_table_test);
+    g_test_add_func("/get_middle_page_sums/get_middle_page_sums_sum", get_middle_page_sums_test);
     return g_test_run();
 }

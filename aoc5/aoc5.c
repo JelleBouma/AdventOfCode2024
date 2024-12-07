@@ -15,8 +15,9 @@ void get_middle_page_total_from_file(FILE* file) {
     fclose(file);
 
     GHashTable* rule_table = build_rule_table(&buffer_ptr);
-    long middle_page_total = get_middle_page_total(buffer_ptr, rule_table);
-    printf("middle page total: %ld", middle_page_total);
+    MiddlePageSums sums = get_middle_page_sums(buffer_ptr, rule_table);
+    printf("Correctly ordered middle page total: %ld\n", sums.correct_ordering_middle_page_sum);
+    printf("Reordered middle page total: %ld\n", sums.reordered_middle_page_sum);
 }
 
 GHashTable* build_rule_table(char** str) {
@@ -42,34 +43,48 @@ bool has_remaining_updates(const char* str) {
     return str && *str && *str != '\n' && *str != '\r';
 }
 
-long get_middle_page_total(char* updates, GHashTable* rule_table) {
-    long middle_page_total = 0;
+MiddlePageSums get_middle_page_sums(char* updates, GHashTable* rule_table) {
+    long correct_order_middle_page_sum = 0;
+    long reordered_middle_page_sum = 0;
     char* current_line = updates;
     while (has_remaining_updates(current_line)) {
-        int is_correct_order = true;
+        bool is_correct_order = true;
         GList* pages = NULL;
         while (has_remaining_updates(current_line)) {
             if (*current_line == ',')
                 current_line++;
             long page = strtol(current_line, &current_line, page_base);
+            bool is_reordered = false;
             if (g_hash_table_contains(rule_table, GINT_TO_POINTER(page))) {
                 GHashTable* rules = g_hash_table_lookup(rule_table, GINT_TO_POINTER(page));
                 int page_count = g_list_length(pages);
                 for (int pp = 0; pp < page_count; pp++)
-                    if (g_hash_table_contains(rules, g_list_nth_data(pages, pp))) {
+                {
+                    GList* element_to_check = g_list_nth(pages, pp);
+                    long page_to_check = GPOINTER_TO_INT(g_list_nth_data(element_to_check, 0));
+                    is_reordered = g_hash_table_contains(rules, GINT_TO_POINTER(page_to_check));
+                    if (is_reordered)
+                    {
                         is_correct_order = false;
+                        pages = g_list_insert_before(pages, element_to_check, GINT_TO_POINTER(page));
                         break;
                     }
+                }
             }
-            if (!is_correct_order)
-                break;
-            pages = g_list_append(pages, GINT_TO_POINTER(page));
+            if (!is_reordered)
+                pages = g_list_append(pages, GINT_TO_POINTER(page));
         }
+        long middle_page = GPOINTER_TO_INT(g_list_nth_data(pages, g_list_length(pages) / 2));
         if (is_correct_order)
-            middle_page_total += g_list_nth_data(pages, g_list_length(pages) / 2);
+            correct_order_middle_page_sum += middle_page;
+        else
+            reordered_middle_page_sum += middle_page;
         g_list_free(pages);
         char* next_line = strchr(current_line, '\n');
         current_line = next_line ? next_line + 1 : NULL;
     }
-    return middle_page_total;
+    MiddlePageSums sums;
+    sums.correct_ordering_middle_page_sum = correct_order_middle_page_sum;
+    sums.reordered_middle_page_sum = reordered_middle_page_sum;
+    return sums;
 }
