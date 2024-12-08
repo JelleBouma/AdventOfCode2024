@@ -1,4 +1,3 @@
-#include <assert.h>
 #include "aoc4.h"
 
 char* input = "MMMSXXMASM\n"

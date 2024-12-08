@@ -1,5 +1,5 @@
-#ifndef AOC2_AOC4_H
-#define AOC2_AOC4_H
+#ifndef AOC4_H
+#define AOC4_H
 
 #include <glib.h>
 
@@ -23,4 +23,4 @@ long cross_mas_search_2d(char* haystack);
 
 long directional_word_search_2d(const char* needle, char** haystack, Pos(*next_pos_func)(Pos));
 
-#endif //AOC2_AOC4_H
+#endif //AOC4_H
