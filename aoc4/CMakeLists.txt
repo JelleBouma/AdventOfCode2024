@@ -8,8 +8,10 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/input.txt ${CMAKE_CURRENT_BINARY_DIR}
 add_executable(aoc4 main.c aoc4.c
         aoc4.h
         main.c
-        ../shared/pos.c)
-add_executable(aoc4tests tests.c ../shared/pos.c aoc4.c)
+        ../shared/pos.c
+        ../shared/matrix.c)
+add_executable(aoc4tests tests.c ../shared/pos.c aoc4.c
+        ../shared/matrix.c)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(deps REQUIRED IMPORTED_TARGET glib-2.0)

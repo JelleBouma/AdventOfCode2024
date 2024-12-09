@@ -25,7 +25,5 @@ extern Pos(*directions_4[4])(Pos);
 extern Pos(*directions_8[8])(Pos);
 
 bool is_in_range(Pos pos, int x_lim, int y_lim);
-char get_from_pos(char** matrix, Pos pos, int x_lim, int y_lim);
-void set_pos_to(char** matrix, Pos pos, int x_lim, int y_lim, char input);
 
 #endif //ADVENT_OF_CODE_2024_POS_H

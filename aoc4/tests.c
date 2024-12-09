@@ -12,8 +12,8 @@ char* input = "MMMSXXMASM\n"
               "MXMXAXMASX";
 
 void directional_word_search_2d_test(Pos(*next_pos_func)(Pos), long expected_count) {
-    char** lines = g_strsplit(input, "\n", 0);
-    long count = directional_word_search_2d("XMAS", lines, next_pos_func);
+    Matrix haystack = new_matrix(input);
+    long count = directional_word_search_2d("XMAS", haystack, next_pos_func);
     g_assert_cmpint(count, ==, expected_count);
 }
 

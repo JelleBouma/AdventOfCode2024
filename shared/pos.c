@@ -43,15 +43,3 @@ Pos(*directions_8[8])(Pos) = { up, right, down, left, up_left, up_right, down_le
 bool is_in_range(Pos pos, int x_lim, int y_lim) {
     return pos.x >= 0 && pos.x < x_lim && pos.y >= 0 && pos.y < y_lim;
 }
-
-char get_from_pos(char** matrix, Pos pos, int x_lim, int y_lim) {
-    if (!is_in_range(pos, x_lim, y_lim))
-        return '\0';
-    else
-        return matrix[pos.y][pos.x];
-}
-
-void set_pos_to(char** matrix, Pos pos, int x_lim, int y_lim, char input) {
-    if (is_in_range(pos, x_lim, y_lim))
-        matrix[pos.y][pos.x] = input;
-}
