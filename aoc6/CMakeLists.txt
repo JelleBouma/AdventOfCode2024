@@ -7,8 +7,10 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/input.txt ${CMAKE_CURRENT_BINARY_DIR}
 
 add_executable(aoc6 main.c aoc6.c
         aoc6.h
-        main.c)
-add_executable(aoc6tests tests.c aoc6.c)
+        main.c
+        ../shared/pos.c)
+add_executable(aoc6tests tests.c aoc6.c
+        ../shared/pos.c)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(deps REQUIRED IMPORTED_TARGET glib-2.0)

@@ -2,20 +2,7 @@
 #define AOC4_H
 
 #include <glib.h>
-
-typedef struct Pos {
-    int x;
-    int y;
-} Pos;
-
-Pos right(Pos input);
-Pos left(Pos input);
-Pos up(Pos input);
-Pos down(Pos input);
-Pos up_left(Pos input);
-Pos up_right(Pos input);
-Pos down_left(Pos input);
-Pos down_right(Pos input);
+#include "../shared/pos.h"
 
 long full_word_search_2d(char* needle, char* haystack);
 
