@@ -10,6 +10,8 @@ int main(int argc, char **argv) {
     char* file_contents;
     g_file_get_contents(argv[1], &file_contents, NULL, NULL);
     long distinct_positions = count_distinct_positions_in_path(file_contents);
+    long infinitely_blockable_positions_in_path = count_infinitely_blockable_positions_in_path(file_contents);
     printf("distinct positions visited by guard: %ld\n", distinct_positions);
+    printf("infinitely blockable positions in path: %ld\n", infinitely_blockable_positions_in_path);
     return EXIT_SUCCESS;
 }

@@ -3,9 +3,12 @@
 
 #include <glib.h>
 
-typedef struct Pos {
-    int x;
-    int y;
+typedef union Pos {
+    struct {
+        short x;
+        short y;
+    };
+    int as_int;
 } Pos;
 
 Pos right(Pos input);
@@ -18,5 +21,6 @@ Pos down_left(Pos input);
 Pos down_right(Pos input);
 
 long count_distinct_positions_in_path(char* map);
+long count_infinitely_blockable_positions_in_path(char* map);
 
 #endif //AOC6_H
