@@ -15,10 +15,6 @@ Pos right(Pos input);
 Pos left(Pos input);
 Pos up(Pos input);
 Pos down(Pos input);
-Pos up_left(Pos input);
-Pos up_right(Pos input);
-Pos down_left(Pos input);
-Pos down_right(Pos input);
 
 long count_distinct_positions_in_path(char* map);
 long count_infinitely_blockable_positions_in_path(char* map);

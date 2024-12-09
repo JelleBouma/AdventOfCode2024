@@ -1,8 +1,7 @@
 #include <stdbool.h>
-#include <math.h>
 #include "aoc6.h"
 
-Pos new_pos(int x, int y) {
+Pos new_pos(short x, short y) {
     Pos pos = { .x = x, .y = y};
     return pos;
 }
