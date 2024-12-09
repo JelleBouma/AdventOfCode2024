@@ -4,14 +4,8 @@
 long full_word_search_2d(char* needle, char* haystack) {
     long needle_count = 0;
     char** lines = g_strsplit(haystack, "\n", 0);
-    needle_count += directional_word_search_2d(needle, lines, right);
-    needle_count += directional_word_search_2d(needle, lines, left);
-    needle_count += directional_word_search_2d(needle, lines, up);
-    needle_count += directional_word_search_2d(needle, lines, down);
-    needle_count += directional_word_search_2d(needle, lines, up_left);
-    needle_count += directional_word_search_2d(needle, lines, up_right);
-    needle_count += directional_word_search_2d(needle, lines, down_left);
-    needle_count += directional_word_search_2d(needle, lines, down_right);
+    for (int dd = 0; dd < 8; dd ++)
+        needle_count += directional_word_search_2d(needle, lines, directions_8[dd]);
     return needle_count;
 }
 
