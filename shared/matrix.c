@@ -1,11 +1,13 @@
 #include "matrix.h"
 
 Matrix new_matrix(char* str) {
-    int line_count = 0;
-    char** content = g_strsplit(str, "\n", 0);
+    short line_count = 0;
+    char** content = g_strsplit(str, "\r\n", 0);
+    if (strlen(str) == strlen(*content))
+        content = g_strsplit(str, "\n", 0);
     while (*(content + line_count))
         line_count++;
-    const int line_len = (int)strlen(*content);
+    const short line_len = (short)strlen(*content);
     Matrix matrix = { .content = content, .x_len = line_len, .y_len = line_count };
     return matrix;
 }

@@ -5,6 +5,16 @@ Pos new_pos(short x, short y) {
     return pos;
 }
 
+Pos plus(Pos a, Pos b) {
+    return new_pos(a.x + b.x, a.y + b.y);
+}
+Pos minus(Pos a, Pos b) {
+    return new_pos(a.x - b.x, a.y - b.y);
+}
+Pos mul(Pos a, Pos b) {
+    return new_pos(a.x * b.x, a.y * b.y);
+}
+
 Pos right(Pos input) {
     return new_pos(input.x + 1, input.y);
 }

@@ -11,6 +11,10 @@ typedef union Pos {
     int as_int;
 } Pos;
 
+Pos plus(Pos a, Pos b);
+Pos minus(Pos a, Pos b);
+Pos mul(Pos a, Pos b);
+
 Pos new_pos(short x, short y);
 Pos right(Pos input);
 Pos left(Pos input);
