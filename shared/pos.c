@@ -49,7 +49,3 @@ Pos down_right(Pos input) {
 
 Pos(*directions_4[4])(Pos) = { up, right, down, left };
 Pos(*directions_8[8])(Pos) = { up, right, down, left, up_left, up_right, down_left, down_right };
-
-bool is_in_range(Pos pos, int x_lim, int y_lim) {
-    return pos.x >= 0 && pos.x < x_lim && pos.y >= 0 && pos.y < y_lim;
-}

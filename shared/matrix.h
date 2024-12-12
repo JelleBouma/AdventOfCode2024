@@ -11,8 +11,10 @@ typedef struct Matrix {
 } Matrix;
 
 Matrix new_matrix(char* str);
-
 char get_from_pos(Matrix matrix, Pos pos);
 void set_pos_to(Matrix matrix, Pos pos, char input);
+void clear_matrix(Matrix matrix);
+bool is_in_range(Pos pos, Matrix matrix);
+
 
 #endif //ADVENT_OF_CODE_2024_MATRIX_H

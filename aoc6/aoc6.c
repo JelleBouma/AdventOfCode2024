@@ -15,7 +15,7 @@ long count_distinct_positions_in_path(char* map) {
     long distinct_position_count = 1;
     Matrix matrix = new_matrix(map);
     Pos pos = find_guard(matrix);
-    while (is_in_range(pos, matrix.x_len, matrix.y_len)) {
+    while (is_in_range(pos, matrix)) {
         Pos next_pos = directions_4[current_direction](pos);
         char next_pos_value = get_from_pos(matrix, next_pos);
         if (next_pos_value == '#') {
@@ -38,7 +38,7 @@ long count_infinitely_blockable_positions_in_path(char* map) {
     long blockable_position_count = 0;
     Matrix matrix = new_matrix(map);
     Pos pos = find_guard(matrix);
-    while (is_in_range(pos, matrix.x_len, matrix.y_len)) {
+    while (is_in_range(pos, matrix)) {
         Pos next_pos = directions_4[current_direction](pos);
         char next_pos_value = get_from_pos(matrix, next_pos);
         if (next_pos_value == '#') {
@@ -50,7 +50,7 @@ long count_infinitely_blockable_positions_in_path(char* map) {
             GHashTable* up_blocks = g_hash_table_new(g_direct_hash, g_direct_equal);
             int inner_direction = (current_direction + 1) % 4;
             Pos inner_pos = pos;
-            while (is_in_range(inner_pos, matrix.x_len, matrix.y_len)) {
+            while (is_in_range(inner_pos, matrix)) {
                 Pos inner_next_pos = directions_4[inner_direction](inner_pos);
                 char inner_next_pos_value = get_from_pos(matrix, inner_next_pos);
                 if (inner_next_pos_value == '#') {

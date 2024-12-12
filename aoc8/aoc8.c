@@ -18,23 +18,23 @@ GHashTable* find_antennas(Matrix matrix) {
     return antenna_dict;
 }
 
-void insert_antinodes(GHashTable* antinodes, Pos antenna_0, Pos antenna_1, short x_lim, short y_lim) {
+void insert_antinodes(GHashTable* antinodes, Pos antenna_0, Pos antenna_1, Matrix matrix) {
     Pos difference = minus(antenna_0, antenna_1);
     Pos antinode_0 = minus(antenna_0, mul(difference, new_pos(2, 2)));
     Pos antinode_1 = plus(antenna_1, mul(difference, new_pos(2, 2)));
-    if (is_in_range(antinode_0, x_lim, y_lim))
+    if (is_in_range(antinode_0, matrix))
         g_hash_table_insert(antinodes, GINT_TO_POINTER(antinode_0.as_int), NULL);
-    if (is_in_range(antinode_1, x_lim, y_lim))
+    if (is_in_range(antinode_1, matrix))
         g_hash_table_insert(antinodes, GINT_TO_POINTER(antinode_1.as_int), NULL);
 }
 
-void insert_resonant_antinodes(GHashTable* antinodes, Pos antinode_0, Pos antinode_1, short x_lim, short y_lim) {
+void insert_resonant_antinodes(GHashTable* antinodes, Pos antinode_0, Pos antinode_1, Matrix matrix) {
     Pos difference = minus(antinode_0, antinode_1);
-    while (is_in_range(antinode_0, x_lim, y_lim)) {
+    while (is_in_range(antinode_0, matrix)) {
         g_hash_table_insert(antinodes, GINT_TO_POINTER(antinode_0.as_int), NULL);
         antinode_0 = minus(antinode_0, difference);
     }
-    while (is_in_range(antinode_1, x_lim, y_lim)) {
+    while (is_in_range(antinode_1, matrix)) {
         g_hash_table_insert(antinodes, GINT_TO_POINTER(antinode_1.as_int), NULL);
         antinode_1 = plus(antinode_1, difference);
     }
@@ -55,9 +55,9 @@ long get_antinode_location_count(char* city, bool are_resonant) {
                 Pos antenna_0 = (Pos)GPOINTER_TO_INT(g_list_nth_data(antennas_for_frequency, aa0));
                 Pos antenna_1 = (Pos)GPOINTER_TO_INT(g_list_nth_data(antennas_for_frequency, aa1));
                 if (are_resonant)
-                    insert_resonant_antinodes(antinode_locations, antenna_0, antenna_1, matrix.x_len, matrix.y_len);
+                    insert_resonant_antinodes(antinode_locations, antenna_0, antenna_1, matrix);
                 else
-                    insert_antinodes(antinode_locations, antenna_0, antenna_1, matrix.x_len, matrix.y_len);
+                    insert_antinodes(antinode_locations, antenna_0, antenna_1, matrix);
             }
     }
     return (long)g_hash_table_size(antinode_locations);

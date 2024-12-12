@@ -13,13 +13,23 @@ Matrix new_matrix(char* str) {
 }
 
 char get_from_pos(Matrix matrix, Pos pos) {
-    if (!is_in_range(pos, matrix.x_len, matrix.y_len))
+    if (!is_in_range(pos, matrix))
         return '\0';
     else
         return matrix.content[pos.y][pos.x];
 }
 
 void set_pos_to(Matrix matrix, Pos pos, char input) {
-    if (is_in_range(pos, matrix.x_len, matrix.y_len))
+    if (is_in_range(pos, matrix))
         matrix.content[pos.y][pos.x] = input;
+}
+
+void clear_matrix(Matrix matrix) {
+    for (int yy = 0; yy < matrix.y_len; yy++)
+        for (int xx = 0; xx < matrix.x_len; xx++)
+            matrix.content[yy][xx] = 0;
+}
+
+bool is_in_range(Pos pos, Matrix matrix) {
+    return pos.x >= 0 && pos.x < matrix.x_len && pos.y >= 0 && pos.y < matrix.y_len;
 }

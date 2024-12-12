@@ -17,3 +17,13 @@ guint hash_128 (gconstpointer v) {
 gboolean equal_128 (gconstpointer v1, gconstpointer v2) {
     return *(__int128*)v1 ==*(__int128*)v2;
 }
+
+char count_bits(char bits) {
+    char count = 0;
+    while (bits != 0) {
+        if (bits % 2 == 1)
+            count++;
+        bits >>= 1;
+    }
+    return count;
+}

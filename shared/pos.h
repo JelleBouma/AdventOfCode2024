@@ -28,6 +28,4 @@ Pos down_right(Pos input);
 extern Pos(*directions_4[4])(Pos);
 extern Pos(*directions_8[8])(Pos);
 
-bool is_in_range(Pos pos, int x_lim, int y_lim);
-
 #endif //ADVENT_OF_CODE_2024_POS_H
