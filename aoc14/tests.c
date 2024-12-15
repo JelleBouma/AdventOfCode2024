@@ -14,7 +14,7 @@ char* input = "p=0,4 v=3,-3\n"
               "p=9,5 v=-3,-3";
 
 void get_safety_factor_test() {
-    gint64 safety_factor = get_safety_factor(input, 11, 7);
+    gint64 safety_factor = get_safety_factor(input, 11, 7, 100);
     g_assert_cmpint(safety_factor, ==, 12);
 }
 
