@@ -21,9 +21,10 @@ gint64 int_list_index(int_list* list, gint64 index) {
 GList* int_list_parse(char* str) {
     int_list* list = NULL;
     while (*str) {
-        if (*str >= '0' && *str <= '9')
+        if (*str == '-' || (*str >= '0' && *str <= '9'))
             int_list_prepend(&list, strtoll(str, &str, decimal_base));
-        str++;
+        if (*str)
+            str++;
     }
     list = g_list_reverse(list);
     return list;

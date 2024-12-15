@@ -2,20 +2,22 @@
 #define ADVENT_OF_CODE_2024_POS_H
 
 #include <stdbool.h>
+#include <glib.h>
 
 typedef union Pos {
     struct {
-        short x;
-        short y;
+        gint32 x;
+        gint32 y;
     };
-    int as_int;
+    gint64 as_int;
 } Pos;
 
 Pos plus(Pos a, Pos b);
 Pos minus(Pos a, Pos b);
 Pos mul(Pos a, Pos b);
+Pos mod(Pos a, Pos b);
 
-Pos new_pos(short x, short y);
+Pos new_pos(gint32 x, gint32 y);
 Pos right(Pos input);
 Pos left(Pos input);
 Pos up(Pos input);

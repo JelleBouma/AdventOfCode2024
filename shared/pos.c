@@ -1,6 +1,6 @@
 #include "pos.h"
 
-Pos new_pos(short x, short y) {
+Pos new_pos(gint32 x, gint32 y) {
     Pos pos = { .x = x, .y = y};
     return pos;
 }
@@ -13,6 +13,9 @@ Pos minus(Pos a, Pos b) {
 }
 Pos mul(Pos a, Pos b) {
     return new_pos(a.x * b.x, a.y * b.y);
+}
+Pos mod(Pos a, Pos b) {
+    return new_pos(a.x % b.x, a.y % b.y);
 }
 
 Pos right(Pos input) {
