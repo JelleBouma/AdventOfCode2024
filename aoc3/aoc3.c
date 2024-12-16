@@ -1,20 +1,19 @@
-#include <stdbool.h>
 #include "aoc3.h"
 
-long get_mul(GMatchInfo* match_info, int offset)
+gint64 get_mul(GMatchInfo* match_info, int offset)
 {
     char* first_number_str = g_match_info_fetch(match_info, offset);
-    long first_number = strtol(first_number_str, NULL, base);
+    gint64 first_number = strtol(first_number_str, NULL, decimal_base);
     g_free(first_number_str);
     char* second_number_str = g_match_info_fetch(match_info, offset + 1);
-    long second_number = strtol(second_number_str, NULL, base);
+    gint64 second_number = strtol(second_number_str, NULL, decimal_base);
     g_free(second_number_str);
     return first_number * second_number;
 }
 
-long get_sum_of_muls(char* str)
+gint64 get_sum_of_muls(char* str)
 {
-    long sum = 0;
+    gint64 sum = 0;
     GMatchInfo* match_info;
     GRegex* regex = g_regex_new("mul\\((\\d+,(\\d+))\\)", 0, 0, NULL);
     g_regex_match (regex, str, 0, &match_info);
@@ -28,10 +27,10 @@ long get_sum_of_muls(char* str)
     return sum;
 }
 
-long get_sum_of_muls_with_dos_and_donts(char* str)
+gint64 get_sum_of_muls_with_dos_and_donts(char* str)
 {
     bool mul_enabled = true;
-    long sum = 0;
+    gint64 sum = 0;
     GMatchInfo* match_info;
     GRegex* regex = g_regex_new("(mul\\((\\d+),(\\d+)\\))|(do\\(\\))|(don't\\(\\))", 0, 0, NULL);
     g_regex_match (regex, str, 0, &match_info);

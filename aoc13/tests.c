@@ -17,7 +17,7 @@ char* input = "Button A: X+94, Y+34\n"
               "Prize: X=18641, Y=10279";
 
 void get_tokens_needed_to_win_all_possible_test() {
-    long long tokens_needed = get_tokens_needed_to_win_all_possible(input, 0);
+    gint64 tokens_needed = get_tokens_needed_to_win_all_possible(input, 0);
     g_assert_cmpint(tokens_needed, ==, 480);
 }
 

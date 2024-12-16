@@ -12,7 +12,7 @@ Pos add_teleports(Pos pos, gint32 x_tiles, gint32 y_tiles) {
     return mod(pos, new_pos(x_tiles, y_tiles));
 }
 
-Pos get_robot_position(int_list** robot_data, gint32 x_tiles, gint32 y_tiles, gint64 move_count) {
+Pos get_robot_position(IntList** robot_data, gint32 x_tiles, gint32 y_tiles, gint64 move_count) {
     gint32 pos_x = (gint32)int_list_iter(robot_data);
     gint32 pos_y = (gint32)int_list_iter(robot_data);
     gint32 vel_x = (gint32)int_list_iter(robot_data);
@@ -33,7 +33,7 @@ int get_quadrant_index(Pos pos, Pos centre) {
 }
 
 gint64 get_safety_factor(char* robots, gint32 x_tiles, gint32 y_tiles, gint64 move_count) {
-    int_list* robot_data = int_list_parse(robots);
+    IntList* robot_data = int_list_parse(robots);
     Pos centre = new_pos(x_tiles / 2, y_tiles / 2);
     gint64 quadrant_robot_counts[4] = {0};
     while (robot_data) {

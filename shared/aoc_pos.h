@@ -1,8 +1,7 @@
 #ifndef ADVENT_OF_CODE_2024_POS_H
 #define ADVENT_OF_CODE_2024_POS_H
 
-#include <stdbool.h>
-#include <glib.h>
+#include "aoc_shared_imports.h"
 
 typedef union Pos {
     struct {

@@ -10,9 +10,9 @@ Pos find_guard(Matrix matrix) {
     exit(EXIT_FAILURE);
 }
 
-long count_distinct_positions_in_path(char* map) {
+gint64 count_distinct_positions_in_path(char* map) {
     int current_direction = 0;
-    long distinct_position_count = 1;
+    gint64 distinct_position_count = 1;
     Matrix matrix = new_matrix(map);
     Pos pos = find_guard(matrix);
     while (is_in_range(pos, matrix)) {
@@ -33,9 +33,9 @@ long count_distinct_positions_in_path(char* map) {
     return distinct_position_count;
 }
 
-long count_infinitely_blockable_positions_in_path(char* map) {
+gint64 count_infinitely_blockable_positions_in_path(char* map) {
     int current_direction = 0;
-    long blockable_position_count = 0;
+    gint64 blockable_position_count = 0;
     Matrix matrix = new_matrix(map);
     Pos pos = find_guard(matrix);
     while (is_in_range(pos, matrix)) {

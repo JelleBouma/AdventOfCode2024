@@ -11,9 +11,9 @@ char* input = "MMMSXXMASM\n"
               "MAMMMXMMMM\n"
               "MXMXAXMASX";
 
-void directional_word_search_2d_test(Pos(*next_pos_func)(Pos), long expected_count) {
+void directional_word_search_2d_test(Pos(*next_pos_func)(Pos), gint64 expected_count) {
     Matrix haystack = new_matrix(input);
-    long count = directional_word_search_2d("XMAS", haystack, next_pos_func);
+    gint64 count = directional_word_search_2d("XMAS", haystack, next_pos_func);
     g_assert_cmpint(count, ==, expected_count);
 }
 
@@ -26,12 +26,12 @@ void directional_word_search_2d_right_test() {
 }
 
 void full_word_search_2d_test() {
-    long count = full_word_search_2d("XMAS", input);
+    gint64 count = full_word_search_2d("XMAS", input);
     g_assert_cmpint(count, ==, 18);
 }
 
 void cross_mas_search_2d_test() {
-    long count = cross_mas_search_2d(input);
+    gint64 count = cross_mas_search_2d(input);
     g_assert_cmpint(count, ==, 9);
 }
 

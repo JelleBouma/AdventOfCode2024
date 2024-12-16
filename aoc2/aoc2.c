@@ -1,60 +1,48 @@
 #include "aoc2.h"
 
-int min(int a, int b) {
-    return a < b ? a : b;
-}
-
-int are_levels_remaining(const char* str) {
-    return str && *str && *str != '\r' && *str != '\n';
-}
-
-long is_bad_difference(long difference)
+gint64 is_bad_difference(gint64 difference)
 {
-    long abs_difference = labs(difference);
+    gint64 abs_difference = llabs(difference);
     return abs_difference == 0 || abs_difference > 3;
 }
 
-int is_safe_impl(const long* levels, int level_count, int skip_index) {
-    for (int ll = 1; ll < level_count; ll++) {
-        if (ll == skip_index)
-            continue;
-        int prev_index = ll - 1 == skip_index ? ll - 2 : ll - 1;
-        int prev_prev_index = ll - 1 == skip_index || ll - 2 == skip_index ? ll - 3 : ll - 2;
-        if (prev_index < 0)
-            continue;
-        long difference = levels[ll] - levels[prev_index];
-        long abs_difference = labs(difference);
-        int bad_difference = abs_difference < 1 || abs_difference > 3;
-        int inconsistent_order = prev_prev_index >= 0 && (levels[prev_index] - levels[prev_prev_index] > 0 != difference > 0);
-        if (bad_difference || inconsistent_order)
-            return 0;
+bool is_safe_impl(IntList* levels, gint64 skip_index) {
+    if (skip_index >= 0)
+        levels = g_list_delete_link(levels, g_list_nth(levels, skip_index));
+    while (levels->next) {
+        levels = levels->next;
+        gint64 difference = int_list_get(levels) - int_list_get(levels->prev);
+        bool inconsistent_order = false;
+        if (levels->prev->prev)
+            inconsistent_order = int_list_get(levels->prev) - int_list_get(levels->prev->prev) > 0 != difference > 0;
+        if (is_bad_difference(difference) || inconsistent_order)
+            return false;
     }
-    return 1;
+    return true;
 }
 
-int is_safe(char* sector, int use_problem_dampener) {
-    long levels[sector_max_byte_len / 2];
-    int level_count = 0;
-    while (are_levels_remaining(sector)) {
-        levels[level_count] = strtol(sector, &sector, level_base);
-        level_count++;
-    }
+bool is_safe(IntList* levels, bool use_problem_dampener) {
+    gint64 level_count = g_list_length(levels);
     if (!use_problem_dampener)
-        return is_safe_impl(levels, level_count, -1);
-    for (int ll = 0; ll < level_count; ll++)
-        if (is_safe_impl(levels, level_count, ll))
-            return 1;
-    return 0;
+        return is_safe_impl(levels, -1);
+    for (int ll = 0; ll < level_count; ll++) {
+        IntList* levels_copy = g_list_copy(levels);
+        IntList* to_free = ll == 0 ? levels_copy->next : levels_copy;
+        bool is_safe = is_safe_impl(levels_copy, ll);
+        g_list_free(to_free);
+        if (is_safe)
+            return true;
+    }
+    return false;
 }
 
-int count_safe_reports(FILE* file) {
-    int safe_report_count = 0, safe_report_count_with_dampener = 0;
-    char sector_string[sector_max_byte_len];
-    while (fgets(sector_string, sector_max_byte_len, file)) {
-        safe_report_count += is_safe(sector_string, 0);
-        safe_report_count_with_dampener += is_safe(sector_string, 1);
+gint64 count_safe_reports(char* input, bool use_problem_dampener) {
+    gint64 safe_report_count = 0;
+    GList* sectors = int_list_per_line(input);
+    GList* sectors_iter = sectors;
+    while (sectors_iter) {
+        safe_report_count += is_safe(sectors_iter->data, use_problem_dampener);
+        sectors_iter = sectors_iter->next;
     }
-    printf("Safe reports (without problem dampener): %d\n", safe_report_count);
-    printf("Safe reports (with problem dampener): %d\n", safe_report_count_with_dampener);
     return safe_report_count;
 }

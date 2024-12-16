@@ -1,13 +1,9 @@
 #ifndef AOC2_H
 #define AOC2_H
 
-#include <stdio.h>
-#include <stdlib.h>
+#include <aoc_shared.h>
 
-#define level_base 10
-#define sector_max_byte_len 64
-
-int is_safe(char* sector, int use_problem_dampener);
-int count_safe_reports(FILE* file);
+bool is_safe(IntList* sector, bool use_problem_dampener);
+gint64 count_safe_reports(char* input, bool use_problem_dampener);
 
 #endif //AOC2_H

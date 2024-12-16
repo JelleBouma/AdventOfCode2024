@@ -1,8 +1,8 @@
 #ifndef ADVENT_OF_CODE_2024_MATRIX_H
 #define ADVENT_OF_CODE_2024_MATRIX_H
 
-#include "pos.h"
-#include <glib.h>
+#include "aoc_shared_imports.h"
+#include "aoc_pos.h"
 
 typedef struct Matrix {
     char** content;

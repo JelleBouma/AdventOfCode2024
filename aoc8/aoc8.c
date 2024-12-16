@@ -40,7 +40,7 @@ void insert_resonant_antinodes(GHashTable* antinodes, Pos antinode_0, Pos antino
     }
 }
 
-long get_antinode_location_count(char* city, bool are_resonant) {
+gint64 get_antinode_location_count(char* city, bool are_resonant) {
     GHashTable* antinode_locations = g_hash_table_new(g_direct_hash, g_direct_equal);
     Matrix matrix = new_matrix(city);
     GHashTable* antennas = find_antennas(matrix);
@@ -52,13 +52,13 @@ long get_antinode_location_count(char* city, bool are_resonant) {
         int antenna_count = (int)g_list_length(antennas_for_frequency);
         for (int aa0 = 0; aa0 < antenna_count; aa0++)
             for (int aa1 = aa0 + 1; aa1 < antenna_count; aa1++) {
-                Pos antenna_0 = (Pos)GPOINTER_TO_INT(g_list_nth_data(antennas_for_frequency, aa0));
-                Pos antenna_1 = (Pos)GPOINTER_TO_INT(g_list_nth_data(antennas_for_frequency, aa1));
+                Pos antenna_0 = (Pos)(gint64)(g_list_nth_data(antennas_for_frequency, aa0));
+                Pos antenna_1 = (Pos)(gint64)(g_list_nth_data(antennas_for_frequency, aa1));
                 if (are_resonant)
                     insert_resonant_antinodes(antinode_locations, antenna_0, antenna_1, matrix);
                 else
                     insert_antinodes(antinode_locations, antenna_0, antenna_1, matrix);
             }
     }
-    return (long)g_hash_table_size(antinode_locations);
+    return (gint64)g_hash_table_size(antinode_locations);
 }

@@ -1,16 +1,16 @@
 #include <stdbool.h>
 #include "aoc4.h"
 
-long full_word_search_2d(char* needle, char* haystack) {
-    long needle_count = 0;
+gint64 full_word_search_2d(char* needle, char* haystack) {
+    gint64 needle_count = 0;
     Matrix matrix = new_matrix(haystack);
     for (int dd = 0; dd < 8; dd ++)
         needle_count += directional_word_search_2d(needle, matrix, directions_8[dd]);
     return needle_count;
 }
 
-long directional_word_search_2d(const char* needle, Matrix haystack, Pos(*next_pos_func)(Pos)) {
-    long needle_count = 0;
+gint64 directional_word_search_2d(const char* needle, Matrix haystack, Pos(*next_pos_func)(Pos)) {
+    gint64 needle_count = 0;
     Pos pos = { .x = 0, .y = 0 };
     for (pos.y = 0; pos.y < haystack.y_len; pos.y++)
         for (pos.x = 0; pos.x < haystack.x_len; pos.x++) {
@@ -34,8 +34,8 @@ bool is_valid_for_cross_mas(char diagonal_char) {
     return diagonal_char == 'M' || diagonal_char == 'S';
 }
 
-long cross_mas_search_2d(char* haystack) {
-    long cross_count = 0;
+gint64 cross_mas_search_2d(char* haystack) {
+    gint64 cross_count = 0;
     Matrix matrix = new_matrix(haystack);
     Pos pos = { .x = 0, .y = 0 };
     for (pos.y = 0; pos.y < matrix.y_len; pos.y++)

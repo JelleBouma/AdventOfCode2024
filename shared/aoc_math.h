@@ -1,9 +1,9 @@
 #ifndef ADVENTOFCODE2024_AOCMATH_H
 #define ADVENTOFCODE2024_AOCMATH_H
 
-#include <glib.h>
-#include <stdlib.h>
-#include <math.h>
+#include "aoc_shared_imports.h"
+
+#define decimal_base 10
 
 int count_digits_128(__int128 input);
 

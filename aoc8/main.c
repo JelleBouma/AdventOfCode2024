@@ -9,8 +9,8 @@ int main(int argc, char **argv) {
     }
     char* file_contents;
     g_file_get_contents(argv[1], &file_contents, NULL, NULL);
-    long antinode_location_count = get_antinode_location_count(file_contents, false);
-    long resonant_antinode_location_count = get_antinode_location_count(file_contents, true);
+    gint64 antinode_location_count = get_antinode_location_count(file_contents, false);
+    gint64 resonant_antinode_location_count = get_antinode_location_count(file_contents, true);
     printf("antinode location count: %ld\n", antinode_location_count);
     printf("resonant antinode location count: %ld\n", resonant_antinode_location_count);
     return EXIT_SUCCESS;

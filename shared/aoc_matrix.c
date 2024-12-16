@@ -1,10 +1,9 @@
-#include "matrix.h"
+#include "aoc_matrix.h"
+#include "aoc_string.h"
 
 Matrix new_matrix(char* str) {
     short line_count = 0;
-    char** content = g_strsplit(str, "\r\n", 0);
-    if (strlen(str) == strlen(*content))
-        content = g_strsplit(str, "\n", 0);
+    char** content = split_lines(str);
     while (*(content + line_count))
         line_count++;
     const short line_len = (short)strlen(*content);

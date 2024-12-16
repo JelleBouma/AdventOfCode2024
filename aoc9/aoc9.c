@@ -1,9 +1,9 @@
 #include "aoc9.h"
 
-long long get_checksum(const char* input, int fragmentation_type) {
+gint64 get_checksum(const char* input, int fragmentation_type) {
     char* disk_map = strdup(input);
-    long long checksum = 0;
-    long disk_map_len = (long)strlen(disk_map);
+    gint64 checksum = 0;
+    gint64 disk_map_len = (gint64)strlen(disk_map);
     int count_back = disk_map_len - 1;
     int count_forward = 0;
     int count_blocks = 0;

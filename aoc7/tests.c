@@ -11,12 +11,12 @@ char* input = "190: 10 19\n"
               "292: 11 6 16 20";
 
 void get_total_calibration_result_plus_mul_test() {
-    long long total_calibration_result = get_total_calibration_result(input, plus_mul, 2);
+    gint64 total_calibration_result = get_total_calibration_result(input, plus_mul, 2);
     g_assert_cmpint(total_calibration_result, ==, 3749);
 }
 
 void get_total_calibration_result_plus_mul_concat_test() {
-    long long total_calibration_result = get_total_calibration_result(input, plus_mul_concat, 3);
+    gint64 total_calibration_result = get_total_calibration_result(input, plus_mul_concat, 3);
     g_assert_cmpint(total_calibration_result, ==, 11387);
 }
 

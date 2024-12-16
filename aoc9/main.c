@@ -9,8 +9,8 @@ int main(int argc, char **argv) {
     }
     char* file_contents;
     g_file_get_contents(argv[1], &file_contents, NULL, NULL);
-    long long by_block_checksum = get_checksum(file_contents, last_block_to_first_empty_slot);
-    long long by_file_checksum = get_checksum(file_contents, last_file_to_first_empty_slot);
+    gint64 by_block_checksum = get_checksum(file_contents, last_block_to_first_empty_slot);
+    gint64 by_file_checksum = get_checksum(file_contents, last_file_to_first_empty_slot);
     printf("checksum after moving blocks: %lld\n", by_block_checksum);
     printf("checksum after moving files: %lld\n", by_file_checksum);
     return EXIT_SUCCESS;

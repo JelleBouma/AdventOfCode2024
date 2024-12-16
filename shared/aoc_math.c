@@ -1,4 +1,4 @@
-#include "aocmath.h"
+#include "aoc_math.h"
 
 int count_digits_128(__int128 input) {
     int count = 0;
@@ -15,7 +15,7 @@ guint hash_128(gconstpointer v) {
 }
 
 gboolean equal_128(gconstpointer v1, gconstpointer v2) {
-    return *(__int128*)v1 ==*(__int128*)v2;
+    return *(__int128*)v1 == *(__int128*)v2;
 }
 
 char count_bits(char bits) {
@@ -28,8 +28,7 @@ char count_bits(char bits) {
     return count;
 }
 
-gint64 gcd(gint64 a, gint64 b)
-{
+gint64 gcd(gint64 a, gint64 b) {
     if (b == 0)
         return a;
     return gcd(b, a % b);

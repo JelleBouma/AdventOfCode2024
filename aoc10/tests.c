@@ -10,12 +10,12 @@ char* input = "89010123\n"
               "10456732";
 
 void get_total_trailhead_score_test() {
-    long long total_trailhead_score = get_total_trailhead_score(input);
+    gint64 total_trailhead_score = get_total_trailhead_score(input);
     g_assert_cmpint(total_trailhead_score, ==, 36);
 }
 
 void get_total_trailhead_rating_test() {
-    long long total_trailhead_score = get_total_trailhead_rating(input);
+    gint64 total_trailhead_score = get_total_trailhead_rating(input);
     g_assert_cmpint(total_trailhead_score, ==, 81);
 }
 

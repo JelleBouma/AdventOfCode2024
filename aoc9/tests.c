@@ -3,12 +3,12 @@
 char* input = "2333133121414131402";
 
 void get_checksum_block_move_test() {
-    long long checksum = get_checksum(input, last_block_to_first_empty_slot);
+    gint64 checksum = get_checksum(input, last_block_to_first_empty_slot);
     g_assert_cmpint(checksum, ==, 1928);
 }
 
 void get_checksum_file_move_test() {
-    long long checksum = get_checksum(input, last_file_to_first_empty_slot);
+    gint64 checksum = get_checksum(input, last_file_to_first_empty_slot);
     g_assert_cmpint(checksum, ==, 2858);
 }
 

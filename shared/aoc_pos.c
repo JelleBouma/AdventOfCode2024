@@ -1,4 +1,4 @@
-#include "pos.h"
+#include "aoc_pos.h"
 
 Pos new_pos(gint32 x, gint32 y) {
     Pos pos = { .x = x, .y = y};

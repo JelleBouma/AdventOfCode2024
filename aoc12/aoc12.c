@@ -61,8 +61,8 @@ int get_sides(Matrix region) {
     return get_sides_by_rows(region, up) + get_sides_by_rows(region, down) + get_sides_by_columns(region, left) + get_sides_by_columns(region, right);
 }
 
-long long get_total_fence_price(char* map, gboolean has_bulk_discount) {
-    long long total_fence_price = 0;
+gint64 get_total_fence_price(char* map, gboolean has_bulk_discount) {
+    gint64 total_fence_price = 0;
     Matrix matrix = new_matrix(map);
     Matrix region = new_matrix(strdup(map));
     clear_matrix(region);

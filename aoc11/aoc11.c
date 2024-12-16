@@ -27,7 +27,7 @@ __int128 count_stones(GHashTable* stones) {
     return total_stones;
 }
 
-GHashTable* parse_stones_from_string(const char *str) {
+GHashTable* parse_stones_from_string(char *str) {
     GHashTable* stones = g_hash_table_new(hash_128, equal_128);
     while (*str) {
         __int128* new_stone = malloc(sizeof(__int128));
@@ -37,7 +37,7 @@ GHashTable* parse_stones_from_string(const char *str) {
     return stones;
 }
 
-__int128 get_total_stones(const char *stones, int blinks) {
+__int128 get_total_stones(char *stones, int blinks) {
     GHashTable* current_stones = parse_stones_from_string(stones);
     for (int bb = 0; bb < blinks; bb++) {
         GHashTable* next_stones = g_hash_table_new(hash_128, equal_128);
@@ -52,7 +52,7 @@ __int128 get_total_stones(const char *stones, int blinks) {
             }
             else if (count_digits_128(*stone_key) % 2 == 0) {
                 int digit_count = count_digits_128(*stone_key);
-                __int128 split = (__int128) pow(10, digit_count / 2);
+                __int128 split = (__int128) pow(10, (int)(digit_count / 2));
                 __int128* new_stone = malloc(sizeof(__int128));
                 *new_stone = *stone_key % split;
                 *stone_key /= split;

@@ -12,7 +12,7 @@ char* input = "RRRRIICCFF\n"
               "MMMISSJEEE";
 
 void get_total_fence_price_no_discount_test() {
-    long long total_fence_price = get_total_fence_price(input, false);
+    gint64 total_fence_price = get_total_fence_price(input, false);
     g_assert_cmpint(total_fence_price, ==, 1930);
 }
 
@@ -24,12 +24,12 @@ char* input_bulk_discount_368 = "AAAAAA\n"
                                 "AAAAAA";
 
 void get_total_fence_price_with_bulk_discount_368_test() {
-    long long total_fence_price = get_total_fence_price(input_bulk_discount_368, true);
+    gint64 total_fence_price = get_total_fence_price(input_bulk_discount_368, true);
     g_assert_cmpint(total_fence_price, ==, 368);
 }
 
 void get_total_fence_price_with_bulk_discount_test() {
-    long long total_fence_price = get_total_fence_price(input, true);
+    gint64 total_fence_price = get_total_fence_price(input, true);
     g_assert_cmpint(total_fence_price, ==, 1206);
 }
 

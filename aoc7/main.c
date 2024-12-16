@@ -9,8 +9,8 @@ int main(int argc, char **argv) {
     }
     char* file_contents;
     g_file_get_contents(argv[1], &file_contents, NULL, NULL);
-    long long plus_mul_res = get_total_calibration_result(file_contents, plus_mul, 2);
-    long long plus_mul_concat_res = get_total_calibration_result(file_contents, plus_mul_concat, 3);
+    gint64 plus_mul_res = get_total_calibration_result(file_contents, plus_mul, 2);
+    gint64 plus_mul_concat_res = get_total_calibration_result(file_contents, plus_mul_concat, 3);
     printf("total calibration result (+, *): %lld\n", plus_mul_res);
     printf("total calibration result (+, *, ||): %lld\n", plus_mul_concat_res);
     return EXIT_SUCCESS;

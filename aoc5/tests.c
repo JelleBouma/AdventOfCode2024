@@ -1,4 +1,3 @@
-#include <assert.h>
 #include "aoc5.h"
 
  char* input = "2|3\n"
@@ -8,10 +7,11 @@
 "\n"
 "5,3,1\n"
 "1,2,3\n"
-"1,5,3\n";
+"1,5,3";
 
 void build_rule_table_test() {
-    GHashTable* rule_table = build_rule_table(&input);
+    char** split_input = split_on_empty_lines(input);
+    GHashTable* rule_table = build_rule_table(split_input[0]);
     g_assert(g_hash_table_contains(rule_table, GINT_TO_POINTER(2)));
     g_assert(g_hash_table_contains(rule_table, GINT_TO_POINTER(1)));
     g_assert(g_hash_table_contains(rule_table, GINT_TO_POINTER(5)));
@@ -49,12 +49,12 @@ char* full_input = "47|53\n"
 "75,29,13\n"
 "75,97,47,61,53\n"
 "61,13,29\n"
-"97,13,75,29,47\n";
+"97,13,75,29,47";
 
 void get_middle_page_sums_test() {
-    char** input_ptr = &input;
-    GHashTable* rule_table = build_rule_table(input_ptr);
-    MiddlePageSums sums = get_middle_page_sums(*input_ptr, rule_table);
+    char** split_input = split_on_empty_lines(full_input);
+    GHashTable* rule_table = build_rule_table(split_input[0]);
+    MiddlePageSums sums = get_middle_page_sums(split_input[1], rule_table);
     g_assert_cmpint(sums.correct_ordering_middle_page_sum, ==, 143);
     g_assert_cmpint(sums.reordered_middle_page_sum, ==, 123);
 }

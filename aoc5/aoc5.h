@@ -1,19 +1,16 @@
-#ifndef ADVENTOFCODE2024_AOC5_H
-#define ADVENTOFCODE2024_AOC5_H
+#ifndef AOC5_H
+#define AOC5_H
 
-#include <stdio.h>
-#include <glib.h>
-
-#define page_base 10
+#include <aoc_shared.h>
 
 typedef struct MiddlePageSums
 {
-    long correct_ordering_middle_page_sum;
-    long reordered_middle_page_sum;
+    gint64 correct_ordering_middle_page_sum;
+    gint64 reordered_middle_page_sum;
 } MiddlePageSums;
 
-void get_middle_page_total_from_file(FILE* file);
-GHashTable* build_rule_table(char** str);
+MiddlePageSums get_middle_page_total(char* str);
+GHashTable* build_rule_table(char* str);
 MiddlePageSums get_middle_page_sums(char* updates, GHashTable* rule_table);
 
-#endif //ADVENTOFCODE2024_AOC5_H
+#endif //AOC5_H

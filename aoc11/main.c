@@ -9,8 +9,8 @@ int main(int argc, char **argv) {
     }
     char* file_contents;
     g_file_get_contents(argv[1], &file_contents, NULL, NULL);
-    long long total_stones_25 = get_total_stones(file_contents, 25);
-    long long total_stones_75 = get_total_stones(file_contents, 75);
+    gint64 total_stones_25 = get_total_stones(file_contents, 25);
+    gint64 total_stones_75 = get_total_stones(file_contents, 75);
     printf("total stones after 25 blinks: %lld\n", total_stones_25);
     printf("total stones after 75 blinks: %lld\n", total_stones_75);
     return EXIT_SUCCESS;

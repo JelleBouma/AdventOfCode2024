@@ -12,12 +12,12 @@ char* input = "....#.....\n"
               "......#...";
 
 void count_distinct_positions_in_path_test() {
-    long count = count_distinct_positions_in_path(input);
+    gint64 count = count_distinct_positions_in_path(input);
     g_assert_cmpint(count, ==, 41);
 }
 
 void count_infinitely_blockable_positions_in_path_test() {
-    long count = count_infinitely_blockable_positions_in_path(input);
+    gint64 count = count_infinitely_blockable_positions_in_path(input);
     g_assert_cmpint(count, ==, 6);
 }
 

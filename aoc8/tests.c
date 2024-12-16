@@ -14,12 +14,12 @@ char* input = "............\n"
               "............";
 
 void get_antinode_location_count_test() {
-    long antinode_location_count = get_antinode_location_count(input, false);
+    gint64 antinode_location_count = get_antinode_location_count(input, false);
     g_assert_cmpint(antinode_location_count, ==, 14);
 }
 
 void get_antinode_location_count_resonant_test() {
-    long antinode_location_count = get_antinode_location_count(input, true);
+    gint64 antinode_location_count = get_antinode_location_count(input, true);
     g_assert_cmpint(antinode_location_count, ==, 34);
 }
 

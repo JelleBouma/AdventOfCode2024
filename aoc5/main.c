@@ -3,15 +3,10 @@
 #include "aoc5.h"
 
 int main(int argc, char **argv) {
-    if (argc != 2) {
-        perror("Invalid number of arguments, usage: aoc5 [file]");
-        return EXIT_FAILURE;
-    }
-    FILE *file = fopen(argv[1], "r");
-    if (!file) {
-        perror("Could not open file");
-        return EXIT_FAILURE;
-    }
-    get_middle_page_total_from_file(file);
+    char* file_contents;
+    g_file_get_contents("aoc5input.txt", &file_contents, NULL, NULL);
+    MiddlePageSums sums = get_middle_page_total(file_contents);
+    printf("Correctly ordered middle page total: %ld\n", sums.correct_ordering_middle_page_sum);
+    printf("Reordered middle page total: %ld\n", sums.reordered_middle_page_sum);
     return EXIT_SUCCESS;
 }

@@ -9,8 +9,8 @@ int main(int argc, char **argv) {
     }
     char* file_contents;
     g_file_get_contents(argv[1], &file_contents, NULL, NULL);
-    long long total_fence_price = get_total_fence_price(file_contents, false);
-    long long total_fence_price_with_bulk_discount = get_total_fence_price(file_contents, true);
+    gint64 total_fence_price = get_total_fence_price(file_contents, false);
+    gint64 total_fence_price_with_bulk_discount = get_total_fence_price(file_contents, true);
     printf("total fence price: %lld\n", total_fence_price);
     printf("total fence price with bulk discount: %lld\n", total_fence_price_with_bulk_discount);
     return EXIT_SUCCESS;

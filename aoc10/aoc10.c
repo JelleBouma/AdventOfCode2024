@@ -4,13 +4,13 @@ int get_trailhead_score(Matrix matrix, Pos trailhead) {
     GHashTable* current_positions = g_hash_table_new(g_direct_hash, g_direct_equal);
     GHashTable* next_positions = g_hash_table_new(g_direct_hash, g_direct_equal);
     g_hash_table_insert(current_positions, GINT_TO_POINTER(trailhead.as_int), NULL);
-    for (char height = '1'; height <= '9'; height++) {
+    for (char height = '1'; height <= '9'; height++) {\
         GHashTableIter iter;
         g_hash_table_iter_init(&iter, current_positions);
         gpointer pos_elem;
         while (g_hash_table_iter_next(&iter, &pos_elem, NULL))
             for (int dd = 0; dd < 4; dd++) {
-                Pos adjacent_pos = directions_4[dd]((Pos)GPOINTER_TO_INT(pos_elem));
+                Pos adjacent_pos = directions_4[dd]((Pos)(gint64)pos_elem);
                 if (get_from_pos(matrix, adjacent_pos) == height)
                     g_hash_table_insert(next_positions, GINT_TO_POINTER(adjacent_pos.as_int), NULL);
             }
@@ -30,7 +30,7 @@ int get_trailhead_rating(Matrix matrix, Pos trailhead) {
     for (char height = '1'; height <= '9'; height++) {
         while (current_positions) {
             for (int dd = 0; dd < 4; dd++) {
-                Pos adjacent_pos = directions_4[dd]((Pos) GPOINTER_TO_INT(current_positions->data));
+                Pos adjacent_pos = directions_4[dd]((Pos)(gint64)current_positions->data);
                 if (get_from_pos(matrix, adjacent_pos) == height)
                     next_positions = g_list_prepend(next_positions, GINT_TO_POINTER(adjacent_pos.as_int));
             }
@@ -45,8 +45,8 @@ int get_trailhead_rating(Matrix matrix, Pos trailhead) {
     return trailhead_score;
 }
 
-long long get_total(char* map, int(*func)(Matrix, Pos)) {
-    long long total = 0;
+gint64 get_total(char* map, int(*func)(Matrix, Pos)) {
+    gint64 total = 0;
     Matrix matrix = new_matrix(map);
     Pos pos;
     for (pos.y = 0; pos.y < matrix.y_len; pos.y++)
@@ -58,10 +58,10 @@ long long get_total(char* map, int(*func)(Matrix, Pos)) {
     return total;
 }
 
-long long get_total_trailhead_score(char* map) {
+gint64 get_total_trailhead_score(char* map) {
     return get_total(map, get_trailhead_score);
 }
 
-long long get_total_trailhead_rating(char* map) {
+gint64 get_total_trailhead_rating(char* map) {
     return get_total(map, get_trailhead_rating);
 }
