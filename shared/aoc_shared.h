@@ -4,6 +4,7 @@
 #include "aoc_math.h"
 #include "aoc_int_list.h"
 #include "aoc_pos.h"
+#include "aoc_pos_dict.h"
 #include "aoc_matrix.h"
 #include "aoc_string.h"
 

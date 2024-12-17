@@ -25,8 +25,10 @@ Pos up_left(Pos input);
 Pos up_right(Pos input);
 Pos down_left(Pos input);
 Pos down_right(Pos input);
+GHashTable* get_char_direction_dict();
 
 extern Pos(*directions_4[4])(Pos);
 extern Pos(*directions_8[8])(Pos);
+
 
 #endif //ADVENT_OF_CODE_2024_POS_H

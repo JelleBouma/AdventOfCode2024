@@ -1,12 +1,9 @@
 #include "aoc_string.h"
 
 char** try_split(char* str, char** separators_to_try) {
-    while (separators_to_try) {
-        char** lines = g_strsplit(str, *separators_to_try, 0);
-        if (strlen(str) != strlen(*lines))
-            return lines;
-        else
-            free(lines);
+    while (*separators_to_try) {
+        if (strstr(str, *separators_to_try))
+            return g_strsplit(str, *separators_to_try, 0);
         separators_to_try++;
     }
     return NULL;

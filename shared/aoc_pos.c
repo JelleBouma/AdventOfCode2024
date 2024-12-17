@@ -50,5 +50,14 @@ Pos down_right(Pos input) {
     return down(right(input));
 }
 
+GHashTable* get_char_direction_dict() {
+    GHashTable* char_direction_dict = g_hash_table_new(g_direct_hash, g_direct_equal);
+    g_hash_table_insert(char_direction_dict, GINT_TO_POINTER('^'), up);
+    g_hash_table_insert(char_direction_dict, GINT_TO_POINTER('>'), right);
+    g_hash_table_insert(char_direction_dict, GINT_TO_POINTER('v'), down);
+    g_hash_table_insert(char_direction_dict, GINT_TO_POINTER('<'), left);
+    return char_direction_dict;
+}
+
 Pos(*directions_4[4])(Pos) = { up, right, down, left };
 Pos(*directions_8[8])(Pos) = { up, right, down, left, up_left, up_right, down_left, down_right };
