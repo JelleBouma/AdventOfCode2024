@@ -3,6 +3,8 @@
 
 #include <aoc_shared.h>
 
-gint64 get_best_path_score(char* maze_string);
+void init_path_traverse(char* maze_string);
+gint64 get_best_path_score();
+gint32 get_best_paths_tile_count();
 
 #endif //AOC16_H

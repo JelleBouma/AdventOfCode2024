@@ -1,25 +1,25 @@
 #include "aoc_int_list.h"
 
-void int_list_prepend(Int64List** list, gint64 to_prepend) {
+void int_list_prepend(PosList** list, gint64 to_prepend) {
     *list = g_list_prepend(*list, (gpointer)to_prepend);
 }
 
-gint64 int_list_get(Int64List* list) {
+gint64 int_list_get(PosList* list) {
     return (gint64)list->data;
 }
 
-gint64 int_list_iter(Int64List** list) {
+gint64 int_list_iter(PosList** list) {
     gint64 res = int_list_get(*list);
     *list = (*list)->next;
     return res;
 }
 
-gint64 int_list_index(Int64List* list, gint64 index) {
+gint64 int_list_index(PosList* list, gint64 index) {
     return (gint64)g_list_nth_data(list, index);
 }
 
-Int64List* int_list_parse(char* str) {
-    Int64List* list = NULL;
+PosList* int_list_parse(char* str) {
+    PosList* list = NULL;
     while (*str) {
         if (*str == '-' || (*str >= '0' && *str <= '9'))
             int_list_prepend(&list, strtoll(str, &str, decimal_base));

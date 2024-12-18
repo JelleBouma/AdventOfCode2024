@@ -10,7 +10,7 @@ add_library(AocShared STATIC
         aoc_matrix.c
         aoc_string.c
         aoc_pos_dict.c
-        aoc_pos_dict.h)
+        aoc_pos_list.c)
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(deps REQUIRED IMPORTED_TARGET glib-2.0)

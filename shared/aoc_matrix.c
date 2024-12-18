@@ -44,9 +44,17 @@ Pos find_in_matrix(Matrix haystack, char needle) {
 
 void debug_print_matrix(Matrix matrix) {
     char** lines = matrix.content;
+    char top_liner[matrix.x_len + 1];
+    for (gint16 ll = 0; ll < matrix.x_len; ll++)
+        top_liner[ll] = (char)('0' + (ll % 10));
+    top_liner[matrix.x_len] = '\0';
+    g_test_message("  %s", top_liner, *lines);
+    char side_line_counter = 0;
     while (*lines) {
-        g_test_message("%s", *lines);
+        g_test_message("%c %s", side_line_counter + '0', *lines);
         lines++;
+        side_line_counter++;
+        side_line_counter %= 10;
     }
     g_test_message("\n");
 }

@@ -7,8 +7,8 @@
 
 typedef struct Matrix {
     char** content;
-    short x_len;
-    short y_len;
+    gint16 x_len;
+    gint16 y_len;
 } Matrix;
 
 Matrix new_matrix(char* str);

@@ -88,7 +88,7 @@ void move_robot_scaled_up(Matrix matrix, Pos robot, char* moves) {
     char* robot_move_iter = moves;
     while (*robot_move_iter) {
         if (g_hash_table_contains(char_direction_dict, GINT_TO_POINTER(*robot_move_iter))) {
-            Int64List* pos_to_check_list = NULL;
+            PosList* pos_to_check_list = NULL;
             Pos(*move_func)(Pos) = g_hash_table_lookup(char_direction_dict, GINT_TO_POINTER(*robot_move_iter));
             pos_char_dict_insert(pos_to_move_dict, robot, robot_char);
             int_list_prepend(&pos_to_check_list, move_func(robot).as_int);
@@ -117,8 +117,8 @@ void move_robot_scaled_up(Matrix matrix, Pos robot, char* moves) {
                 }
             }
             if (g_hash_table_size(pos_to_move_dict)) {
-                Int64List* pos_to_move_list = g_hash_table_get_keys(pos_to_move_dict);
-                Int64List* iter = pos_to_move_list;
+                PosList* pos_to_move_list = g_hash_table_get_keys(pos_to_move_dict);
+                PosList* iter = pos_to_move_list;
                 while (iter) {
                     Pos to_move = (Pos)int_list_get(iter);
                     set_pos_to(matrix, to_move, empty_char);
