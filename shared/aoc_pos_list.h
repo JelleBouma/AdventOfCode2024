@@ -12,5 +12,6 @@ void pos_list_prepend(PosList** list, Pos to_prepend);
 Pos pos_list_get(PosList* list);
 Pos pos_list_iter(PosList** list);
 Pos pos_list_index(PosList* list, gint64 index);
+PosList* pos_list_parse(char* str);
 
 #endif //ADVENT_OF_CODE_2024_POS_LIST_H
