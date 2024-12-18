@@ -42,3 +42,17 @@ GList* int_list_per_line(char* str) {
     list_of_int_lists = g_list_reverse(list_of_int_lists);
     return list_of_int_lists;
 }
+
+gint64 int_list_take(Int64List** list) {
+    gint64 taken = int_list_get(*list);
+    *list = g_list_delete_link(*list, *list);
+    return taken;
+}
+
+GString* int_list_to_string(Int64List* list) {
+    GString* str = g_string_new("");
+    while (list->next)
+        g_string_append_printf(str, "%lld,", int_list_iter(&list));
+    g_string_append_printf(str, "%lld", int_list_iter(&list));
+    return str;
+}
