@@ -3,7 +3,7 @@
 
 #include "aoc_shared_imports.h"
 
-typedef union Pos {
+typedef union {
     struct {
         gint32 x;
         gint32 y;

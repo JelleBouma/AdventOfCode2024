@@ -15,5 +15,6 @@ Int64List* int_list_parse(char* str);
 GList* int_list_per_line(char* str);
 gint64 int_list_take(Int64List** list);
 GString* int_list_to_string(Int64List* list);
+bool int_list_equal(Int64List* a, Int64List* b);
 
 #endif //ADVENT_OF_CODE_2024_INT_LIST_H

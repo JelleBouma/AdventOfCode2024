@@ -56,3 +56,12 @@ GString* int_list_to_string(Int64List* list) {
     g_string_append_printf(str, "%lld", int_list_iter(&list));
     return str;
 }
+
+bool int_list_equal(Int64List* a, Int64List* b) {
+    while (a && b)
+        if (int_list_iter(&a) != int_list_iter(&b))
+            return false;
+    if (a != b)
+        return false;
+    return true;
+}

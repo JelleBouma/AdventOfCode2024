@@ -18,3 +18,13 @@ char** split_on_empty_lines(char* str) {
     char* empty_lines[3] = { "\r\n\r\n", "\n\n", NULL };
     return try_split(str, empty_lines);
 }
+
+bool starts_with(char* str, char* prefix) {
+    while (prefix) {
+        if (*prefix != *str)
+            return false;
+        prefix++;
+        str++;
+    }
+    return true;
+}
