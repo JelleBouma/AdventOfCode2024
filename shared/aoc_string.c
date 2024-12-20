@@ -1,5 +1,9 @@
 #include "aoc_string.h"
 
+char** split(char* str, char* separator) {
+    return g_strsplit(str, separator, 0);
+}
+
 char** try_split(char* str, char** separators_to_try) {
     while (*separators_to_try) {
         if (strstr(str, *separators_to_try))
@@ -20,8 +24,8 @@ char** split_on_empty_lines(char* str) {
 }
 
 bool starts_with(char* str, char* prefix) {
-    while (prefix) {
-        if (*prefix != *str)
+    while (*prefix) {
+        if (!*str || *prefix != *str)
             return false;
         prefix++;
         str++;

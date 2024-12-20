@@ -3,6 +3,7 @@
 
 #include "aoc_shared_imports.h"
 
+char** split(char* str, char* separator);
 char** try_split(char* str, char** separators_to_try);
 char** split_lines(char* str);
 char** split_on_empty_lines(char* str);
