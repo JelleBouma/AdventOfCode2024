@@ -3,6 +3,8 @@
 
 #include <aoc_shared.h>
 
-gint32 get_minimum_steps_to_exit(char* input, gint64 input_limit, gint32 x_len, gint32 y_len);
+void one_time_setup(gint32 x_len, gint32 y_len);
+gint32 get_minimum_steps_to_exit(char* input, gint64 input_limit);
+char* get_first_blocking_byte(char* input);
 
 #endif //AOC18_H

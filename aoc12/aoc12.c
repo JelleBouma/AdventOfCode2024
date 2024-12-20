@@ -65,7 +65,7 @@ gint64 get_total_fence_price(char* map, gboolean has_bulk_discount) {
     gint64 total_fence_price = 0;
     Matrix matrix = new_matrix(map);
     Matrix region = new_matrix(strdup(map));
-    clear_matrix(region);
+    clear_matrix(region, 0);
     Pos pos;
     for (pos.y = 0; pos.y < matrix.y_len; pos.y++)
         for (pos.x = 0; pos.x < matrix.x_len; pos.x++) {
@@ -78,7 +78,7 @@ gint64 get_total_fence_price(char* map, gboolean has_bulk_discount) {
                     total_fence_price += area * sides;
                 else
                     total_fence_price += area * perimeter;
-                clear_matrix(region);
+                clear_matrix(region, 0);
             }
         }
     return total_fence_price;

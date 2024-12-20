@@ -59,5 +59,9 @@ GHashTable* get_char_direction_dict() {
     return char_direction_dict;
 }
 
+char* pos_to_str(Pos pos) {
+    return g_strdup_printf("%d,%d", pos.x, pos.y);
+}
+
 Pos(*directions_4[4])(Pos) = { up, right, down, left };
 Pos(*directions_8[8])(Pos) = { up, right, down, left, up_left, up_right, down_left, down_right };

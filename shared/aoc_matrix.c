@@ -35,10 +35,10 @@ void set_pos_to(Matrix matrix, Pos pos, char input) {
         matrix.content[pos.y][pos.x] = input;
 }
 
-void clear_matrix(Matrix matrix) {
+void clear_matrix(Matrix matrix, char default_char) {
     for (int yy = 0; yy < matrix.y_len; yy++)
         for (int xx = 0; xx < matrix.x_len; xx++)
-            matrix.content[yy][xx] = 0;
+            matrix.content[yy][xx] = default_char;
 }
 
 bool is_in_range(Pos pos, Matrix matrix) {
