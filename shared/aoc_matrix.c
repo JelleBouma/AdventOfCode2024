@@ -1,12 +1,25 @@
 #include "aoc_matrix.h"
 
 Matrix new_matrix(char* str) {
-    short line_count = 0;
+    gint32 line_count = 0;
     char** content = split_lines(str);
-    while (*(content + line_count))
+    while (content[line_count])
         line_count++;
-    const short line_len = (short)strlen(*content);
+    const gint32 line_len = (gint32)strlen(*content);
     Matrix matrix = { .content = content, .x_len = line_len, .y_len = line_count };
+    return matrix;
+}
+
+Matrix new_empty_matrix(char default_char, gint32 x_len, gint32 y_len) {
+    char** content = calloc(y_len + 1, sizeof(char*));
+    for (gint32 yy = 0; yy < y_len; yy++) {
+        content[yy] = calloc(x_len + 1, sizeof(char));
+        for (gint32 xx = 0; xx < x_len; xx++)
+            content[yy][xx] = default_char;
+        content[yy][x_len] = '\0';
+    }
+    content[y_len] = NULL;
+    Matrix matrix = { .content = content, .x_len = x_len, .y_len = y_len };
     return matrix;
 }
 
@@ -45,7 +58,7 @@ Pos find_in_matrix(Matrix haystack, char needle) {
 void debug_print_matrix(Matrix matrix) {
     char** lines = matrix.content;
     char top_liner[matrix.x_len + 1];
-    for (gint16 ll = 0; ll < matrix.x_len; ll++)
+    for (gint32 ll = 0; ll < matrix.x_len; ll++)
         top_liner[ll] = (char)('0' + (ll % 10));
     top_liner[matrix.x_len] = '\0';
     g_test_message("  %s", top_liner, *lines);

@@ -7,11 +7,12 @@
 
 typedef struct Matrix {
     char** content;
-    gint16 x_len;
-    gint16 y_len;
+    gint32 x_len;
+    gint32 y_len;
 } Matrix;
 
 Matrix new_matrix(char* str);
+Matrix new_empty_matrix(char default_char, gint32 x_len, gint32 y_len);
 char get_from_pos(Matrix matrix, Pos pos);
 void set_pos_to(Matrix matrix, Pos pos, char input);
 void clear_matrix(Matrix matrix);
