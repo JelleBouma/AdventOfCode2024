@@ -4,18 +4,25 @@ HashTree* available_pattern_dict;
 char** desired_designs;
 
 gint64 count_possible_options(char* design) {
-    if (!*design)
-        return 1;
-    gint64 possible_options = 0;
-    HashNode* node = g_hash_table_lookup(available_pattern_dict, (gconstpointer)(gint64)*design);
-    gint64 depth = 1;
-    while (node && *(design + depth)) {
-        if (node->value)
-            possible_options += count_possible_options(design + depth);
-        node = g_hash_table_lookup(node->children, (gconstpointer)(gint64)*(design + depth));
-        depth++;
+    gint64 full_len = (gint64)strlen(design);
+    gint64 options[full_len];
+    for (gint32 oo = 0; oo < full_len; oo++)
+        options[oo] = 0;
+    for (gint32 offset = 0; offset < full_len; offset++) {
+        HashNode* node = g_hash_table_lookup(available_pattern_dict, (gconstpointer)(gint64)*(design + offset));
+        gint32 depth = 0;
+        while (node) {
+            if (node->value) {
+                if (offset == 0)
+                    options[depth] = 1;
+                else
+                    options[offset + depth] += options[offset - 1];
+            }
+            depth++;
+            node = g_hash_table_lookup(node->children, (gconstpointer)(gint64)*(design + offset + depth));
+        }
     }
-    return possible_options;
+    return options[full_len - 1];
 }
 
 void one_time_setup(char* input) {
