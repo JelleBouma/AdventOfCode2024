@@ -8,5 +8,6 @@
 #include "aoc_pos_dict.h"
 #include "aoc_matrix.h"
 #include "aoc_string.h"
+#include "aoc_hash_tree.h"
 
 #endif //ADVENT_OF_CODE_2024_AOC_SHARED_H
