@@ -17,22 +17,26 @@ char* input = "###############\n"
               "###############";
 
 void get_count_of_cheats_that_save_20_test() {
-    gint64 cheat_count = get_count_of_cheats_that_save_x(input, 20);
+    setup(input);
+    gint64 cheat_count = get_count_of_cheats_that_save_x(2, 20);
     g_assert_cmpint(cheat_count, ==, 5);
 }
 
 void get_count_of_cheats_that_save_12_test() {
-    gint64 cheat_count = get_count_of_cheats_that_save_x(input, 12);
+    setup(input);
+    gint64 cheat_count = get_count_of_cheats_that_save_x(2, 12);
     g_assert_cmpint(cheat_count, ==, 8);
 }
 
 void get_count_of_cheats_that_save_10_test() {
-    gint64 cheat_count = get_count_of_cheats_that_save_x(input, 10);
+    setup(input);
+    gint64 cheat_count = get_count_of_cheats_that_save_x(2, 10);
     g_assert_cmpint(cheat_count, ==, 10);
 }
 
 void get_count_of_cheats_that_save_2_test() {
-    gint64 cheat_count = get_count_of_cheats_that_save_x(input, 2);
+    setup(input);
+    gint64 cheat_count = get_count_of_cheats_that_save_x(2, 2);
     g_assert_cmpint(cheat_count, ==, 44);
 }
 

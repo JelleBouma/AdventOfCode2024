@@ -4,12 +4,10 @@
 #define wall_char '#'
 #define start_char 'S'
 #define end_char 'E'
+#define marked_path_char '0'
 
 gint32* scores;
-gint32* cheating_scores;
 Matrix track;
-Pos start;
-Pos end;
 
 gint32 get_score(Pos pos, gint32* score_table) {
     return score_table[pos.y * track.x_len + pos.x];
@@ -44,32 +42,35 @@ void traverse_path(Pos start_pos, gint32* score_table) {
 
 void setup(char* track_string) {
     track = new_matrix(track_string);
-    start = find_in_matrix(track, start_char);
-    end = find_in_matrix(track, end_char);
     scores = calloc(track.y_len * track.x_len, sizeof(gint32));
-    cheating_scores = calloc(track.y_len * track.x_len, sizeof(gint32));
+    traverse_path(find_in_matrix(track, start_char), scores);
 }
 
-void reset_cheating_scores() {
-    memset(cheating_scores, 0, track.x_len * track.y_len * sizeof(gint32));
+gint64 get_count_of_cheats_that_save_x_from_pos(Pos pos, gint32 cheat_time, gint32 to_save) {
+    gint64 res = 0;
+    gint32 score = get_score(pos, scores);
+    Pos pos_to_check;
+    for (pos_to_check.y = pos.y - cheat_time; pos_to_check.y <= pos.y + cheat_time; pos_to_check.y++)
+        for (pos_to_check.x = pos.x - cheat_time; pos_to_check.x <= pos.x + cheat_time; pos_to_check.x++) {
+            gint32 manhattan_dist = abs(pos_to_check.x - pos.x) + abs(pos_to_check.y - pos.y);
+            if (manhattan_dist < 2 || manhattan_dist > cheat_time)
+                continue;
+            char pos_type = get_from_pos(track, pos_to_check);
+            if (!pos_type || pos_type == wall_char)
+                continue;
+            gint32 cheated_score = score + manhattan_dist;
+            if (cheated_score <= get_score(pos_to_check, scores) - to_save)
+                res++;
+        }
+    return res;
 }
 
-gint64 get_count_of_cheats_that_save_x(char* track_string, gint64 to_save) {
-    setup(track_string);
-    traverse_path(start, scores);
-    gint32 best_score_no_cheating = get_score(end, scores);
+gint64 get_count_of_cheats_that_save_x(gint32 cheat_time, gint32 to_save) {
     gint64 count_of_cheats_that_save_x_secs = 0;
     Pos pos;
     for (pos.y = 0; pos.y < track.y_len; pos.y++)
-        for (pos.x = 0; pos.x < track.x_len; pos.x++) {
-            if (get_from_pos(track, pos) == wall_char) {
-                set_pos_to(track, pos, empty_char);
-                reset_cheating_scores();
-                traverse_path(start, cheating_scores);
-                if (get_score(end, cheating_scores) <= best_score_no_cheating - to_save)
-                    count_of_cheats_that_save_x_secs++;
-                set_pos_to(track, pos, wall_char);
-            }
-        }
+        for (pos.x = 0; pos.x < track.x_len; pos.x++)
+            if (get_from_pos(track, pos) != wall_char)
+                count_of_cheats_that_save_x_secs += get_count_of_cheats_that_save_x_from_pos(pos, cheat_time, to_save);
     return count_of_cheats_that_save_x_secs;
 }
