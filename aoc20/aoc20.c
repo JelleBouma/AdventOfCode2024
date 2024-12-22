@@ -4,7 +4,6 @@
 #define wall_char '#'
 #define start_char 'S'
 #define end_char 'E'
-#define marked_path_char '0'
 
 gint32* scores;
 Matrix track;
