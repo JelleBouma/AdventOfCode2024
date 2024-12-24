@@ -17,6 +17,9 @@ Pos mul(Pos a, Pos b) {
 Pos mod(Pos a, Pos b) {
     return new_pos(a.x % b.x, a.y % b.y);
 }
+gint32 manhattan_dist(Pos a, Pos b) {
+    return abs(a.x - b.x) + abs(a.y - b.y);
+}
 
 Pos right(Pos input) {
     return new_pos(input.x + 1, input.y);
@@ -57,6 +60,15 @@ GHashTable* get_char_direction_dict() {
     g_hash_table_insert(char_direction_dict, GINT_TO_POINTER('v'), down);
     g_hash_table_insert(char_direction_dict, GINT_TO_POINTER('<'), left);
     return char_direction_dict;
+}
+
+GHashTable* get_direction_char_dict() {
+    GHashTable* direction_char_dict = g_hash_table_new(g_direct_hash, g_direct_equal);
+    g_hash_table_insert(direction_char_dict, up, GINT_TO_POINTER('^'));
+    g_hash_table_insert(direction_char_dict, right, GINT_TO_POINTER('>'));
+    g_hash_table_insert(direction_char_dict, down, GINT_TO_POINTER('v'));
+    g_hash_table_insert(direction_char_dict, left, GINT_TO_POINTER('<'));
+    return direction_char_dict;
 }
 
 char* pos_to_str(Pos pos) {

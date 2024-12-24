@@ -51,13 +51,13 @@ gint64 get_count_of_cheats_that_save_x_from_pos(Pos pos, gint32 cheat_time, gint
     Pos pos_to_check;
     for (pos_to_check.y = pos.y - cheat_time; pos_to_check.y <= pos.y + cheat_time; pos_to_check.y++)
         for (pos_to_check.x = pos.x - cheat_time; pos_to_check.x <= pos.x + cheat_time; pos_to_check.x++) {
-            gint32 manhattan_dist = abs(pos_to_check.x - pos.x) + abs(pos_to_check.y - pos.y);
-            if (manhattan_dist < 2 || manhattan_dist > cheat_time)
+            gint32 dist = manhattan_dist(pos, pos_to_check);
+            if (dist < 2 || dist > cheat_time)
                 continue;
             char pos_type = get_from_pos(track, pos_to_check);
             if (!pos_type || pos_type == wall_char)
                 continue;
-            gint32 cheated_score = score + manhattan_dist;
+            gint32 cheated_score = score + dist;
             if (cheated_score <= get_score(pos_to_check, scores) - to_save)
                 res++;
         }
