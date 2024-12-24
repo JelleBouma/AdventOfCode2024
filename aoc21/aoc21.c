@@ -1,5 +1,7 @@
 #include "aoc21.h"
 
+#define gap_char '.'
+
 char* keypad_str = "789\n"
                    "456\n"
                    "123\n"
@@ -23,10 +25,10 @@ char* get_sequence(char* code, Matrix keys) {
     while (*code) {
         Pos target = find_in_matrix(keys, *code);
         while (pos.x != target.x || pos.y != target.y) {
-            if (get_from_pos(keys, new_pos(target.x, pos.y)) != '.')
+            if (get_from_pos(keys, new_pos(target.x, pos.y)) != gap_char)
                 for (; pos.x > target.x; pos.x--)
                     g_string_append(sequence, "<");
-            if (get_from_pos(keys, new_pos(pos.x, target.y)) != '.') {
+            if (get_from_pos(keys, new_pos(pos.x, target.y)) != gap_char) {
                 for (; pos.y > target.y; pos.y--)
                     g_string_append(sequence, "^");
                 for (; pos.y < target.y; pos.y++)
@@ -70,10 +72,12 @@ HashCounts* get_counts(char* seq) {
 char** split_seq(char* seq) {
     char** split = g_strsplit(seq, "A", 0);
     char** split_iter = split;
-    while (*(split_iter + 1)) {
+    while (*split_iter) {
         *split_iter = g_strconcat(*split_iter, "A", NULL);
         split_iter++;
     }
+    free(*(split_iter - 1));
+    *(split_iter - 1) = NULL;
     return split;
 }
 
@@ -89,8 +93,6 @@ gint64 get_length_of_shortest_sequence(char* code) {
         char* seq_part;
         while (g_hash_table_iter_next(&iter, (gpointer*)&seq_part, NULL)) {
             gint64 count = get_count(counts, seq_part);
-            if (count < 0)
-                exit(666);
             char** sub_seqs = g_hash_table_lookup(translation_table, seq_part);
             if (!sub_seqs) {
                 sub_seqs = split_seq(get_sequence(seq_part, directional_keypad));
