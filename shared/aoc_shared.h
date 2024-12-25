@@ -10,5 +10,6 @@
 #include "aoc_string.h"
 #include "aoc_hash_tree.h"
 #include "aoc_hash_counts.h"
+#include "aoc_hash_table.h"
 
 #endif //ADVENT_OF_CODE_2024_AOC_SHARED_H
