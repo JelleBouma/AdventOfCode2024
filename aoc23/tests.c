@@ -34,12 +34,20 @@ char* input = "kh-tc\n"
               "td-yn";
 
 void count_t_triangles_test() {
-    gint64 t_triangles = count_t_triangles(input);
+    setup(input);
+    gint64 t_triangles = count_t_triangles();
     g_assert_cmpint(t_triangles, ==, 7);
+}
+
+void get_lan_party_password_test() {
+    setup(input);
+    char* pwd = get_lan_party_password();
+    g_assert_cmpstr(pwd, ==, "co,de,ka,ta");
 }
 
 int main(int argc, char **argv) {
     g_test_init (&argc, &argv, NULL);
     g_test_add_func("/count_t_triangles/test", count_t_triangles_test);
+    g_test_add_func("/get_lan_party_password/test", get_lan_party_password_test);
     return g_test_run();
 }

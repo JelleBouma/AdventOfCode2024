@@ -32,3 +32,17 @@ bool starts_with(char* str, char* prefix) {
     }
     return true;
 }
+
+gint32 cmp_alphabetically(gconstpointer a, gconstpointer b) {
+    char* str_a = (char*)a;
+    char* str_b = (char*)b;
+    while (*str_a && *str_b) {
+        if (*str_a < *str_b)
+            return -1;
+        if (*str_a > *str_b)
+            return 1;
+        str_a++;
+        str_b++;
+    }
+    return 0;
+}
