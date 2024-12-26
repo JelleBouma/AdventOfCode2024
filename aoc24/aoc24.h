@@ -3,6 +3,8 @@
 
 #include <aoc_shared.h>
 
-gint64 get_output(char* input);
+void setup(char* input);
+gint64 get_output();
+char* get_crossed_wires();
 
 #endif //AOC24_H

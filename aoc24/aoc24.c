@@ -71,35 +71,32 @@ void logic() {
         GList* logic_gate_iter = logic_gates;
         while (logic_gate_iter) {
             LogicGate* gate = logic_gate_iter->data;
-            gint64 input0state = (gint64) g_hash_table_lookup(wire_dict, gate->input0);
-            gint64 input1state = (gint64) g_hash_table_lookup(wire_dict, gate->input1);
-            if (input0state != inactive && input1state != inactive) {
+            gint64 input0_state = (gint64) g_hash_table_lookup(wire_dict, gate->input0);
+            gint64 input1_state = (gint64) g_hash_table_lookup(wire_dict, gate->input1);
+            gint64 output_state = (gint64) g_hash_table_lookup(wire_dict, gate->output);
+            if (input0_state != inactive && input1_state != inactive && output_state == inactive) {
                 any_activated = true;
                 gint64 output;
                 if (gate->operator == AND)
-                    output = input0state & input1state;
+                    output = input0_state & input1_state;
                 else if (gate->operator == XOR)
-                    output = input0state ^ input1state;
+                    output = input0_state ^ input1_state;
                 else
-                    output = input0state | input1state;
+                    output = input0_state | input1_state;
                 g_hash_table_insert(wire_dict, gate->output, (gpointer)output);
-                GList* next = logic_gate_iter->next;
-                logic_gates = g_list_remove_link(logic_gates, logic_gate_iter);
-                logic_gate_iter = next;
             }
-            else
-                logic_gate_iter = logic_gate_iter->next;
+            logic_gate_iter = logic_gate_iter->next;
         }
     }
 }
 
-gint64 get_output_from_z_wires() {
+gint64 get_from_wires(char wire_prefix) {
     gint64 res = 0;
     char wire[4] = {0};
     bool wire_exists = true;
     gint32 z_counter = 0;
     while (wire_exists) {
-        g_snprintf(wire, 4, "z%02d", z_counter);
+        g_snprintf(wire, 4, "%c%02d", wire_prefix, z_counter);
         wire_exists = g_hash_table_contains(wire_dict, wire);
         if (wire_exists)
             res += (gint64)g_hash_table_lookup(wire_dict, wire) << z_counter;
@@ -108,8 +105,65 @@ gint64 get_output_from_z_wires() {
     return res;
 }
 
-gint64 get_output(char* input) {
+void setup(char* input) {
     build_dicts(input);
+}
+
+gint64 get_output() {
     logic();
-    return get_output_from_z_wires();
+    return get_from_wires('z');
+}
+
+LogicGate* find_filtered_gate(char* input, gint32 operator) {
+    GList* gate_iter = logic_gates;
+    while (gate_iter) {
+        LogicGate* gate = gate_iter->data;
+        if ((g_str_equal(input, gate->input0) || g_str_equal(input, gate->input1)) && gate->operator == operator)
+            return gate;
+        gate_iter = gate_iter->next;
+    }
+    return NULL;
+}
+
+bool is_valid(LogicGate* gate) {
+    bool input0_is_direct = *gate->input0 == 'x' || *gate->input0 == 'y';
+    bool input1_is_direct = *gate->input1 == 'x' || *gate->input1 == 'y';
+    bool output_is_direct = *gate->output == 'z';
+    if (gate->operator == XOR) {
+        if (!input0_is_direct && !input1_is_direct && !output_is_direct)
+            return false;
+        if (input0_is_direct && input1_is_direct && !g_str_equal(gate->output, "z00"))
+            return find_filtered_gate(gate->output, XOR);
+    }
+    else if (gate->operator == OR) {
+        if (output_is_direct && !g_str_equal(gate->output, "z45"))
+            return false;
+    }
+    else {
+        if (output_is_direct)
+            return false;
+        if (!g_str_equal(gate->input0, "x00") && !g_str_equal(gate->input1, "x00") && !g_str_equal(gate->input0, "y00") && !g_str_equal(gate->input1, "y00"))
+            return find_filtered_gate(gate->output, OR);
+    }
+    return true;
+}
+
+char* get_crossed_wires() {
+    GList* invalid_outputs = NULL;
+    GList* logic_gate_iter = logic_gates;
+    while (logic_gate_iter) {
+        LogicGate* gate = logic_gate_iter->data;
+        if (!is_valid(gate))
+            invalid_outputs = g_list_prepend(invalid_outputs, gate->output);
+        logic_gate_iter = logic_gate_iter->next;
+    }
+    invalid_outputs = g_list_sort(invalid_outputs, cmp_alphabetically);
+    GString* res = g_string_new("");
+    while (invalid_outputs) {
+        g_string_append(res, invalid_outputs->data);
+        if (invalid_outputs->next)
+            g_string_append_c(res, ',');
+        invalid_outputs = invalid_outputs->next;
+    }
+    return res->str;
 }

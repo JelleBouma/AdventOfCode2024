@@ -12,7 +12,8 @@ char* input = "x00: 1\n"
               "x02 OR y02 -> z02";
 
 void get_output_test() {
-    gint64 output = get_output(input);
+    setup(input);
+    gint64 output = get_output();
     g_assert_cmpint(output, ==, 4);
 }
 
