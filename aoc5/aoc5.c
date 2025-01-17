@@ -34,7 +34,7 @@ MiddlePageSums get_middle_page_sums(char* updates, GHashTable* rule_table) {
     char* current_line = updates;
     while (has_remaining_updates(current_line)) {
         bool is_correct_order = true;
-        GList* pages = NULL;
+        Int64List* pages = NULL;
         while (has_remaining_updates(current_line)) {
             if (*current_line == ',')
                 current_line++;
@@ -45,8 +45,8 @@ MiddlePageSums get_middle_page_sums(char* updates, GHashTable* rule_table) {
                 int page_count = g_list_length(pages);
                 for (int pp = 0; pp < page_count; pp++)
                 {
-                    GList* element_to_check = g_list_nth(pages, pp);
-                    gint64 page_to_check = GPOINTER_TO_INT(g_list_nth_data(element_to_check, 0));
+                    Int64List* element_to_check = g_list_nth(pages, pp);
+                    gint64 page_to_check = int_list_index(element_to_check, 0);
                     is_reordered = g_hash_table_contains(rules, GINT_TO_POINTER(page_to_check));
                     if (is_reordered)
                     {
@@ -59,7 +59,7 @@ MiddlePageSums get_middle_page_sums(char* updates, GHashTable* rule_table) {
             if (!is_reordered)
                 pages = g_list_append(pages, GINT_TO_POINTER(page));
         }
-        gint64 middle_page = GPOINTER_TO_INT(g_list_nth_data(pages, g_list_length(pages) / 2));
+        gint64 middle_page = GPOINTER_TO_INT(int_list_index(pages, g_list_length(pages) / 2));
         if (is_correct_order)
             correct_order_middle_page_sum += middle_page;
         else

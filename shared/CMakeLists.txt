@@ -18,4 +18,4 @@ add_library(AocShared STATIC
 
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(deps REQUIRED IMPORTED_TARGET glib-2.0)
-target_link_libraries(AocShared PkgConfig::deps)
+target_link_libraries(AocShared PkgConfig::deps m)
